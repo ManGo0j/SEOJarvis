@@ -1,0 +1,21 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-}
+        VITE_AUTOMATION_ID: ${VITE_AUTOMATION_ID:-2}
+        VITE_APP_NAME: ${VITE_APP_NAME:-SEO-Джарвис}
+        VITE_APP_TAGLINE: ${VITE_APP_TAGLINE:-Кабинет автоматизаций}
+    container_name: seo-cabinet
+    restart: unless-stopped
+    ports:
+      - "${PORT:-80}:80"
+    environment:
+      API_UPSTREAM: ${API_UPSTREAM:-https://rsd-ai.ru}
+      API_HOST: ${API_HOST:-rsd-ai.ru}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
