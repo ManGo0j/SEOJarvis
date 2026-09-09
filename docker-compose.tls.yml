@@ -1,0 +1,29 @@
+# Bundled HTTPS: Caddy on :80/:443 (Let's Encrypt), cabinet stays on the Docker network.
+# docker compose -f docker-compose.yml -f docker-compose.tls.yml up -d --build
+#
+# Requires CABINET_DOMAIN and ACME_EMAIL in .env. DNS A/AAAA must point at this host.
+# Do not use this file if the host already has nginx/Caddy on 80/443 — use deploy/ instead.
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: seo-cabinet-caddy
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      CABINET_DOMAIN: ${CABINET_DOMAIN:?Set CABINET_DOMAIN in .env}
+      ACME_EMAIL: ${ACME_EMAIL:?Set ACME_EMAIL in .env}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

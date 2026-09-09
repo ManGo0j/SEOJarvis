@@ -1,0 +1,15 @@
+# Host Caddy (not Docker). HTTP→HTTPS and ACME are automatic.
+# caddy run --config deploy/Caddyfile.host
+#
+# Point this domain's A/AAAA at the server. Cabinet: docker compose up -d --build
+
+cabinet.example.com {
+	encode gzip
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Frame-Options SAMEORIGIN
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+	reverse_proxy 127.0.0.1:8080
+}

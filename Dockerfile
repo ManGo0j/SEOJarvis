@@ -21,6 +21,7 @@ RUN npm run build
 FROM nginx:alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx/00-maps.conf /etc/nginx/conf.d/00-maps.conf
 COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 COPY nginx/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
