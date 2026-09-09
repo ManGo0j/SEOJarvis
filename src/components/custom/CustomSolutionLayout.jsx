@@ -81,7 +81,6 @@ const getNavItems = (features) => {
   return [
     { id: 'dashboard', label: 'Дашборд', icon: DashboardIcon, path: NAVIGATION_ROUTES.CUSTOM_AUTOMATION_DASHBOARD() },
     { id: 'activity', label: 'Активность', icon: ActivityIcon, path: NAVIGATION_ROUTES.CUSTOM_AUTOMATION_ACTIVITY() },
-    { id: 'errors', label: 'Баги и ошибки', icon: ActivityIcon, path: NAVIGATION_ROUTES.CUSTOM_AUTOMATION_ERRORS() },
     {
       id: 'accounts',
       label: 'Аккаунты',
